@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="animate-fade-in">
+    <div class="glass-container">
+        <a href="{% url 'index' %}"
+            style="display: inline-flex; align-items: center; color: var(--secondary-color); text-decoration: none; margin-bottom: 1.5rem; transition: color 0.2s;">
+            <span style="font-size: 1.2rem; margin-right: 0.5rem;">&larr;</span> Back
+        </a>
+        <h2>Scenario</h2>
+        <div class="scenario-box">
+            <p style="font-size: 1.1rem; line-height: 1.6;">{{ scenario }}</p>
+        </div>
+
+        <form action="{% url 'submit_assessment' %}" method="POST">
+            {% csrf_token %}
+
+            {% for category, question in questions.items %}
+            <div style="margin-bottom: 2rem;">
+                <h3 style="color: var(--primary-color); font-size: 1.1rem; margin-bottom: 0.5rem;">{{ category }}</h3>
+                <p style="margin-bottom: 1rem; font-style: italic; color: #cbd5e1;">{{ question }}</p>
+                <textarea name="response_{{ category }}" rows="4" required placeholder="Type your response here..."
+                    minlength="20"></textarea>
+            </div>
+            {% endfor %}
+
+            <button type="submit" class="btn-primary" style="width: 100%;">Submit Responses</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

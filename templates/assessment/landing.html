@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+    .premium-input-group label {
+        display: block;
+        color: #94a3b8;
+        font-size: 0.875rem;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        transition: color 0.3s;
+    }
+
+    .premium-input-group:focus-within label {
+        color: #3b82f6;
+    }
+
+    .premium-input,
+    .premium-select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        background: rgba(30, 41, 59, 0.4);
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 12px;
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        backdrop-filter: blur(10px);
+    }
+
+    .premium-input:hover,
+    .premium-select:hover {
+        background: rgba(30, 41, 59, 0.6);
+        border-color: rgba(148, 163, 184, 0.4);
+    }
+
+    .premium-input:focus,
+    .premium-select:focus {
+        outline: none;
+        border-color: #3b82f6;
+        background: rgba(30, 41, 59, 0.8);
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+
+    .premium-select {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%2394a3b8'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 1rem center;
+        background-size: 1.25rem;
+        cursor: pointer;
+    }
+
+    .premium-select option {
+        background-color: #1e293b;
+        color: white;
+    }
+
+    /* Placeholder color */
+    ::placeholder {
+        color: #64748b;
+    }
+
+    /* Hide spin buttons for premium look */
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
+
+<div class="glass-container animate-fade-in" style="max-width: 420px; margin: 4rem auto; padding: 2.5rem;">
+    <div style="text-align: center; margin-bottom: 2rem;">
+        <h1
+            style="font-size: 2rem; font-weight: 700; margin-bottom: 0.75rem; background: linear-gradient(135deg, #fff 0%, #94a3b8 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+            EQ Assessment</h1>
+        <p style="color: #94a3b8; line-height: 1.5; font-size: 0.95rem;">
+            Discover your emotional intelligence profile. You will be presented with a tailored professional scenario
+            followed by reflective questions to analyze your responses.
+        </p>
+    </div>
+
+    <form action="{% url 'start_assessment' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="premium-input-group" style="margin-bottom: 1.25rem;">
+            <label for="age">Age</label>
+            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                <button type="button" class="age-btn" onclick="adjustAge(-1)">-</button>
+                <input type="number" id="age" name="age" class="premium-input" required min="18" max="100"
+                    placeholder="28" style="text-align: center;">
+                <button type="button" class="age-btn" onclick="adjustAge(1)">+</button>
+            </div>
+        </div>
+
+        <script>
+            function adjustAge(delta) {
+                const input = document.getElementById('age');
+                let val = parseInt(input.value) || 28; // Default to 28 if empty
+                val += delta;
+                if (val < 18) val = 18;
+                if (val > 100) val = 100;
+                input.value = val;
+            }
+        </script>
+
+        <style>
+            .age-btn {
+                background: rgba(30, 41, 59, 0.4);
+                border: 1px solid rgba(148, 163, 184, 0.2);
+                color: #fff;
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                cursor: pointer;
+                font-size: 1.25rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: all 0.2s;
+            }
+
+            .age-btn:hover {
+                background: rgba(59, 130, 246, 0.2);
+                border-color: #3b82f6;
+                color: #3b82f6;
+            }
+        </style>
+
+        <div class="premium-input-group" style="margin-bottom: 1.25rem;">
+            <label for="gender">Gender</label>
+            <select id="gender" name="gender" class="premium-select" required>
+                <option value="" disabled selected>Select your gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="Non-binary">Non-binary</option>
+                <option value="Prefer not to say">Prefer not to say</option>
+            </select>
+        </div>
+
+        <div class="premium-input-group" style="margin-bottom: 2rem;">
+            <label for="profession">Profession</label>
+            <select id="profession" name="profession" class="premium-select" required>
+                <option value="" disabled selected>Select your profession</option>
+                <option value="IT Professional">IT Professional</option>
+                <option value="Healthcare">Healthcare</option>
+                <option value="Teacher">Teacher</option>
+                <option value="Law Enforcement & Social Work">Law Enforcement & Social Work</option>
+                <option value="Business & Management">Business & Management</option>
+                <option value="Creative & Media">Creative & Media</option>
+                <option value="Other">Other</option>
+            </select>
+        </div>
+
+        <button type="submit" class="btn-primary"
+            style="width: 100%; padding: 0.875rem; font-size: 1.1rem; border-radius: 12px;">
+            Start Assessment
+        </button>
+    </form>
+</div>
+{% endblock %}
