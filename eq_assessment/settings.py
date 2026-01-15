@@ -7,8 +7,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 load_dotenv(BASE_DIR / '.env')
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-
-
+INSTANCE_DIR = BASE_DIR / 'instance'
+INSTANCE_DIR.mkdir(parents=True, exist_ok=True)
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
 EQ_MODEL_NAME = os.getenv('EQ_MODEL_NAME', 'sreenathsree1578/Bert_fine_tuned_eq')
