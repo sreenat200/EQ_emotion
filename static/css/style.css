@@ -8,6 +8,14 @@
     --glass-border: rgba(255, 255, 255, 0.1);
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+
+
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -23,6 +31,7 @@ body {
     top: 0;
     left: 0;
     right: 0;
+    width: 100%;
     z-index: 1000;
     padding: 1.5rem 2rem;
     border-bottom: 1px solid var(--glass-border);
@@ -36,7 +45,7 @@ body {
     margin: 0 auto;
     padding: 2rem;
     padding-top: 8rem;
-    /* Added to account for fixed header */
+    /* Account for fixed header */
     width: 100%;
 }
 
@@ -50,6 +59,7 @@ body {
 }
 
 .btn-primary {
+    background-color: var(--primary-color);
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
     color: white;
     padding: 0.75rem 1.5rem;
@@ -58,6 +68,11 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: transform 0.2s, box-shadow 0.2s;
+    appearance: none;
+    -webkit-appearance: none;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
 }
 
 .btn-primary:hover {
